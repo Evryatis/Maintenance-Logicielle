@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://schema.omg.org/spec/UML/2.1">
+  <xmi:Documentation exporter="umbrello uml modeller 25.04.2 (Applications 25.04.2) http://umbrello.kde.org" exporterVersion="2.0.4"/>
+  <uml:Model xmi:id="m1" name="Pixel Tracer Architecture">
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="folder" name="folder"/>
+    <packagedElement xmi:type="uml:Stereotype" xmi:id="dataType" name="dataType"/>
+    <packagedElement xmi:type="uml:Model" xmi:id="Logical_View" name="Logical View" stereotype="folder">
+      
+      <!-- ============ DATATYPES ============ -->
+      <uml:Package xmi:id="Datatypes" name="Datatypes" stereotype="folder">
+        <packagedElement xmi:type="uml:DataType" xmi:id="dtInt" name="int" stereotype="dataType"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="dtString" name="String" stereotype="dataType"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="dtBoolean" name="boolean" stereotype="dataType"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="dtChar" name="char" stereotype="dataType"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="dtFloat" name="float" stereotype="dataType"/>
+        <packagedElement xmi:type="uml:DataType" xmi:id="dtArrayList" name="ArrayList" stereotype="dataType"/>
+      </uml:Package>
+      
+      <!-- ============ PACKAGE COMMAND ============ -->
+      <packagedElement xmi:type="uml:Package" xmi:id="pkgCommand" name="command"/>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsCommand" name="Command">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propCmdName" name="name" visibility="private" type="dtString"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propCmdIntParams" name="intParams" visibility="private" type="dtArrayList"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propCmdStrParams" name="strParams" visibility="private" type="dtArrayList"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propCmdFloatParams" name="floatParams" visibility="private" type="dtArrayList"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opCmdGetName" name="getName" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opCmdSetName" name="setName" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opCmdToString" name="toString" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsCommandParser" name="CommandParser">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opParseCommand" name="parseCommand" visibility="public" isStatic="true">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramParseCmdInput" name="input" type="dtString" direction="in"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramParseCmdReturn" type="clsCommand" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opReadCommand" name="readCommandFromInput" visibility="public" isStatic="true">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramReadCmdReturn" type="clsCommand" direction="return"/>
+        </ownedOperation>
+      </packagedElement>
+      
+      <!-- ============ PACKAGE SHAPE ============ -->
+      <packagedElement xmi:type="uml:Package" xmi:id="pkgShape" name="shape"/>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsShape" name="Shape" isAbstract="true">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propShapeId" name="id" visibility="private" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propShapeShapeType" name="shapeType" visibility="private"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propShapeFill" name="fill" visibility="private" type="dtChar"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propShapeThickness" name="thickness" visibility="private" type="dtFloat"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propShapeColor" name="color" visibility="private" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propShapeRotation" name="rotation" visibility="private" type="dtFloat"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opShapeGetColor" name="getColor" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opShapeSetColor" name="setColor" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opShapeToString" name="toString" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsPoint" name="Point">
+        <generalization xmi:type="uml:Generalization" xmi:id="genPointShape" general="clsShape"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propPointX" name="pos_x" visibility="private" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propPointY" name="pos_y" visibility="private" type="dtInt"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opPointGetX" name="getPos_x" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opPointGetY" name="getPos_y" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opPointToString" name="toString" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsLine" name="Line">
+        <generalization xmi:type="uml:Generalization" xmi:id="genLineShape" general="clsShape"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="proplineP1" name="p1" visibility="private" type="clsPoint"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propLineP2" name="p2" visibility="private" type="clsPoint"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLineGetP1" name="getP1" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLineGetP2" name="getP2" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLineSetP1" name="setP1" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLineSetP2" name="setP2" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLineToString" name="toString" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsCercle" name="Cercle">
+        <generalization xmi:type="uml:Generalization" xmi:id="genCercleShape" general="clsShape"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propCercleCenter" name="center" visibility="private" type="clsPoint"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propCercleRadius" name="radus" visibility="private" type="dtInt"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opCercleGetCenter" name="getCenter" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opCercleGetRadius" name="getRadus" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opCercleToString" name="toString" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsCircle" name="Circle">
+        <generalization xmi:type="uml:Generalization" xmi:id="genCircleShape" general="clsShape"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propCircleCenter" name="center" visibility="private" type="clsPoint"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opCircleGetCenter" name="getCenter" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opCircleToString" name="toString" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsPolygone" name="Polygone">
+        <generalization xmi:type="uml:Generalization" xmi:id="genPolygoneShape" general="clsShape"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propPolygonePoints" name="points" visibility="private" type="dtArrayList"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opPolygoneGetPoints" name="getPoints" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opPolygoneSetPoints" name="setPoints" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opPolygoneToString" name="toString" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsRectangle" name="Rectangle">
+        <generalization xmi:type="uml:Generalization" xmi:id="genRectangleShape" general="clsShape"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propRectP1" name="p1" visibility="private" type="clsPoint"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propRectWidth" name="width" visibility="private" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propRectHeight" name="height" visibility="private" type="dtInt"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opRectGetP1" name="getP1" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opRectGetWidth" name="getWidth" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opRectGetHeight" name="getHeight" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opRectToString" name="toString" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsSquar" name="Squar">
+        <generalization xmi:type="uml:Generalization" xmi:id="genSquarShape" general="clsShape"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propSquarP1" name="p1" visibility="private" type="clsPoint"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propSquarLength" name="length" visibility="private" type="dtInt"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opSquarGetP1" name="getP1" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opSquarGetLength" name="getLength" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opSquarToString" name="toString" visibility="public"/>
+      </packagedElement>
+      
+      <!-- ============ PACKAGE PIXEL ============ -->
+      <packagedElement xmi:type="uml:Package" xmi:id="pkgPixel" name="pixel"/>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsPixel" name="Pixel" isActive="false">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propPixelX" name="x" visibility="public" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propPixelY" name="y" visibility="public" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propPixelColor" name="color" visibility="public" type="dtInt"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Interface" xmi:id="iRasterizer" name="Rasterizer">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opRasterize" name="rasterize" visibility="public">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramRasterizeShape" name="shape" type="clsShape" direction="in"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramRasterizeReturn" name="result" type="dtArrayList" direction="return"/>
+        </ownedOperation>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsBresenhamRasterizer" name="BresenhamRasterizer">
+        <realization xmi:type="uml:Realization" xmi:id="realBresenham" client="clsBresenhamRasterizer" supplier="iRasterizer"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opBresenhamRasterize" name="rasterize" visibility="public">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramBresenhamShape" name="shape" type="clsShape" direction="in"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramBresenhamReturn" name="result" type="dtArrayList" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opBresenhamRasterizeLine" name="rasterizeLine" visibility="private">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramBresenhamLine" name="line" type="clsLine" direction="in"/>
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramBresenhamLineReturn" type="dtArrayList" direction="return"/>
+        </ownedOperation>
+      </packagedElement>
+      
+      <!-- Dépendance entre BresenhamRasterizer et Shape/Line -->
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depBresenhamShape" name="" client="clsBresenhamRasterizer" supplier="clsShape"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depBresenhamLine" name="" client="clsBresenhamRasterizer" supplier="clsLine"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depBresenhamPixel" name="" client="clsBresenhamRasterizer" supplier="clsPixel"/>
+      
+      <!-- ============ PACKAGE LAYER ============ -->
+      <packagedElement xmi:type="uml:Package" xmi:id="pkgLayer" name="layer"/>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsLayer" name="Layer">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propLayerId" name="id" visibility="private" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propLayerName" name="name" visibility="private" type="dtString"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propLayerVisible" name="visible" visibility="private" type="dtBoolean"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propLayerShapes" name="listShape" visibility="private" type="dtArrayList"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLayerGetId" name="getId" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLayerGetName" name="getName" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLayerGetVisible" name="getVisible" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLayerGetShapes" name="getListShape" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLayerSetId" name="setId" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLayerSetName" name="setName" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLayerSetVisible" name="setVisible" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opLayerSetShapes" name="setListShape" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsAreas" name="Areas">
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propAreasId" name="id" visibility="private" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propAreasName" name="name" visibility="private" type="dtString"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propAreasWidth" name="width" visibility="private" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propAreasHeight" name="height" visibility="private" type="dtInt"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propAreasEmptyChar" name="emptyChar" visibility="private" type="dtChar"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propAreasFullChar" name="fullChar" visibility="private" type="dtChar"/>
+        <ownedAttribute xmi:type="uml:Property" xmi:id="propAreasLayers" name="layers" visibility="private" type="dtArrayList"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opAreasGetId" name="getId" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opAreasGetWidth" name="getWidth" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opAreasGetHeight" name="getHeight" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opAreasGetEmptyChar" name="getEmptyChar" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opAreasGetFullChar" name="getFullChar" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opAreasGetLayers" name="getLayers" visibility="public"/>
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opAreasSetLayers" name="setLayers" visibility="public"/>
+      </packagedElement>
+      
+      <packagedElement xmi:type="uml:Class" xmi:id="clsVisualizer" name="Visualizer">
+        <ownedOperation xmi:type="uml:Operation" xmi:id="opVisualizerRender" name="render" visibility="public" isStatic="true">
+          <ownedParameter xmi:type="uml:Parameter" xmi:id="paramVisualizerArea" name="area" type="clsAreas" direction="in"/>
+        </ownedOperation>
+      </packagedElement>
+      
+      <!-- Dépendances dans le package layer -->
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depAreasLayers" name="contains" client="clsAreas" supplier="clsLayer"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depLayerShapes" name="contains" client="clsLayer" supplier="clsShape"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depVisualizerAreas" name="uses" client="clsVisualizer" supplier="clsAreas"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depVisualizerRasterizer" name="uses" client="clsVisualizer" supplier="iRasterizer"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depVisualizerPixel" name="uses" client="clsVisualizer" supplier="clsPixel"/>
+      
+      <!-- ============ INTERDÉPENDANCES ENTRE PACKAGES ============ -->
+      <!-- Main utilise Command, CommandParser -->
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depMainCommand" name="" client="clsCommand" supplier="clsCommand"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depMainParser" name="" client="clsCommandParser" supplier="clsCommand"/>
+      
+      <!-- CommandParser produit des Command -->
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depParserCommand" name="" client="clsCommandParser" supplier="clsCommand"/>
+      
+      <!-- Visualizer utilise BresenhamRasterizer for rasterizing Shapes -->
+      <packagedElement xmi:type="uml:Dependency" xmi:id="depVisRasterizer" name="" client="clsVisualizer" supplier="clsBresenhamRasterizer"/>
+      
+    </packagedElement>
+    
+    <!-- ============ UI SETUP ============ -->
+    <xmi:Extension extender="umbrello">
+      <docsettings viewid="diag1" documentation="" uniqueid="uniqueId1"/>
+      <diagrams resolution="96">
+        <diagram xmi.id="diag1" name="Architecture Pixel Tracer" type="1" documentation="Diagramme d'architecture du système Pixel Tracer" backgroundcolor="#ffffff" usebackgroundcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" griddotcolor="#d3d3d3" linecolor="#990000" linewidth="0" textcolor="#000000" usefillcolor="1" showattribassocs="1" showatts="1" showattsig="1" showops="1" showopsig="1" showpackage="1" showpubliconly="0" showscope="1" showstereotype="2" localid="-1" showgrid="0" snapgrid="0" snapcsgrid="0" snapx="25" snapy="25" zoom="73" canvasheight="1000" canvaswidth="1400" isopen="1">
+          <widgets>
+            <!-- Packages -->
+            <packagewidget xmi.id="pkgCommand" localid="pkgCmdWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="50" y="50" width="80" height="50" isinstance="0" showstereotype="2"/>
+            <packagewidget xmi.id="pkgShape" localid="pkgShapeWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="350" y="50" width="80" height="50" isinstance="0" showstereotype="2"/>
+            <packagewidget xmi.id="pkgPixel" localid="pkgPixelWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="650" y="50" width="80" height="50" isinstance="0" showstereotype="2"/>
+            <packagewidget xmi.id="pkgLayer" localid="pkgLayerWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="950" y="50" width="80" height="50" isinstance="0" showstereotype="2"/>
+            
+            <!-- Command Package Classes -->
+            <classwidget xmi.id="clsCommand" localid="clsCmdWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="30" y="150" width="120" height="100" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            <classwidget xmi.id="clsCommandParser" localid="clsCmdParserWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="170" y="150" width="130" height="90" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            
+            <!-- Shape Package Classes -->
+            <classwidget xmi.id="clsShape" localid="clsShapeWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="330" y="150" width="120" height="140" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601" drawascircle="0"/>
+            <classwidget xmi.id="clsPoint" localid="clsPointWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="280" y="350" width="100" height="80" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            <classwidget xmi.id="clsLine" localid="clsLineWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="420" y="350" width="100" height="100" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            <classwidget xmi.id="clsCercle" localid="clsCercleWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="560" y="350" width="100" height="90" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            
+            <!-- Pixel Package Classes -->
+            <classwidget xmi.id="clsPixel" localid="clsPixelWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="650" y="150" width="100" height="70" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            <classwidget xmi.id="iRasterizer" localid="iRasterizerWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="800" y="150" width="100" height="60" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            <classwidget xmi.id="clsBresenhamRasterizer" localid="clsBresenhamWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="740" y="280" width="140" height="100" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            
+            <!-- Layer Package Classes -->
+            <classwidget xmi.id="clsLayer" localid="clsLayerWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="950" y="200" width="120" height="120" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            <classwidget xmi.id="clsAreas" localid="clsAreasWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="1100" y="200" width="140" height="140" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+            <classwidget xmi.id="clsVisualizer" localid="clsVisualizerWidget" textcolor="#000000" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="0" fillcolor="#ffffc0" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="1050" y="450" width="130" height="80" isinstance="0" showstereotype="2" showoperations="1" showpubliconly="0" showopsigs="601" showpackage="1" showscope="1" showattributes="1" showattsigs="601"/>
+          </widgets>
+          <messages/>
+          <associations>
+            <!-- Shape inheritance -->
+            <assocwidget xmi.id="genPointShape" localid="genPointWidget" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" seqnum="" type="500" widgetaid="clsPoint" widgetbid="clsShape">
+              <linepath layout="Direct">
+                <startpoint startx="330" starty="350"/>
+                <endpoint endx="390" endy="290"/>
+              </linepath>
+            </assocwidget>
+            <assocwidget xmi.id="genLineShape" localid="genLineWidget" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" seqnum="" type="500" widgetaid="clsLine" widgetbid="clsShape">
+              <linepath layout="Direct">
+                <startpoint startx="470" starty="350"/>
+                <endpoint endx="420" endy="290"/>
+              </linepath>
+            </assocwidget>
+            <assocwidget xmi.id="genCercleShape" localid="genCercleWidget" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" seqnum="" type="500" widgetaid="clsCercle" widgetbid="clsShape">
+              <linepath layout="Direct">
+                <startpoint startx="610" starty="350"/>
+                <endpoint endx="450" endy="290"/>
+              </linepath>
+            </assocwidget>
+            
+            <!-- Parser produces Command -->
+            <assocwidget xmi.id="depParserCommand" localid="depParserCmdWidget" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" seqnum="" type="502" widgetaid="clsCommandParser" widgetbid="clsCommand">
+              <linepath layout="Direct">
+                <startpoint startx="170" starty="190"/>
+                <endpoint endx="150" endy="190"/>
+              </linepath>
+            </assocwidget>
+            
+            <!-- BresenhamRasterizer implements Rasterizer -->
+            <assocwidget xmi.id="realBresenham" localid="realBresenhamWidget" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" seqnum="" type="501" widgetaid="clsBresenhamRasterizer" widgetbid="iRasterizer">
+              <linepath layout="Direct">
+                <startpoint startx="810" starty="280"/>
+                <endpoint endx="850" endy="210"/>
+              </linepath>
+            </assocwidget>
+            
+            <!-- Layer contains Shapes -->
+            <assocwidget xmi.id="depLayerShapes" localid="depLayerShapesWidget" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" seqnum="" type="510" widgetaid="clsLayer" widgetbid="clsShape">
+              <floatingtext xmi.id="ftLayerShapes" localid="ftLayerShapesLocal" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="700" y="270" width="50" height="22" isinstance="0" showstereotype="2" text="contains" pretext="" posttext="" role="710"/>
+              <linepath layout="Direct">
+                <startpoint startx="950" starty="260"/>
+                <endpoint endx="450" endy="350"/>
+              </linepath>
+            </assocwidget>
+            
+            <!-- Areas contains Layers -->
+            <assocwidget xmi.id="depAreasLayers" localid="depAreasLayersWidget" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" seqnum="" type="510" widgetaid="clsAreas" widgetbid="clsLayer">
+              <floatingtext xmi.id="ftAreasLayers" localid="ftAreasLayersLocal" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" x="1060" y="270" width="50" height="22" isinstance="0" showstereotype="2" text="contains" pretext="" posttext="" role="710"/>
+              <linepath layout="Direct">
+                <startpoint startx="1100" starty="260"/>
+                <endpoint endx="1070" endy="260"/>
+              </linepath>
+            </assocwidget>
+            
+            <!-- Visualizer uses Areas -->
+            <assocwidget xmi.id="depVisualizerAreas" localid="depVisualizerAreasWidget" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,0,0" autoresize="1" seqnum="" type="502" widgetaid="clsVisualizer" widgetbid="clsAreas">
+              <linepath layout="Direct">
+                <startpoint startx="1100" starty="450"/>
+                <endpoint endx="1150" endy="340"/>
+              </linepath>
+            </assocwidget>
+            
+            <!-- Visualizer uses BresenhamRasterizer -->
+            <assocwidget xmi.id="depVisRasterizer" localid="depVisRasterizerWidget" textcolor="none" linecolor="#990000" linewidth="0" usefillcolor="1" usesdiagramfillcolor="1" fillcolor="none" font="Cantarell,11,-1,5,50,0,0,0,50,0,0,0,0,0" autoresize="1" seqnum="" type="502" widgetaid="clsVisualizer" widgetbid="clsBresenhamRasterizer">
+              <linepath layout="Direct">
+                <startpoint startx="1050" starty="470"/>
+                <endpoint endx="880" endy="380"/>
+              </linepath>
+            </assocwidget>
+          </associations>
+        </diagram>
+      </diagrams>
+    </xmi:Extension>
+  </uml:Model>
+</xmi:XMI>

@@ -1,0 +1,12 @@
+layer/LayerTest.class
+shape/PolygoneTest.class
+shape/CercleTest.class
+shape/PointTest.class
+command/CommandTest.class
+shape/LineTest.class
+shape/CircleTest.class
+shape/SquarTest.class
+shape/RectangleTest.class
+command/CommandParserTest.class
+layer/AreasTest.class
+shape/ShapeTest.class
